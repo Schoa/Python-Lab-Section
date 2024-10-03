@@ -10,7 +10,6 @@ def convert(unit):
         result = (unit - 32) * (5/9)
     return result
 
-
-# Print result
+# Print result & format
 result = convert(unit)
-print(result:.2f)
+print("{result:.2f}".format(result = result))
