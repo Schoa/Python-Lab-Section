@@ -9,7 +9,7 @@ B = list(map(float, input().split()))
 def calc_dist(A, B):
     """
     Calculate the distance between two points in 2D space.
-        dist(A,B)= √((xA − xB)^2 + (yA − yB)^2)
+        dist(A,B) = √((xA − xB)^2 + (yA − yB)^2)
     """
     xA, yA = A
     xB, yB = B
