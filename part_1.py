@@ -10,9 +10,6 @@ length, width = map(
     int, input_length_width.split()
 )
 
-# Ensure the values are within the specified range
-if 1 <= length <= 100000 and 1 <= width <= 100000:
-    area, perimeter = rectangle_area_and_perimeter(length, width)
-    print(area, perimeter)
-else:
-    print("Error: Value too big")
+# Print result
+area, perimeter = rectangle_area_and_perimeter(length, width)
+print(area, perimeter)
