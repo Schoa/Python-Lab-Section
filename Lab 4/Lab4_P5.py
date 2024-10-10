@@ -1,32 +1,42 @@
 import math
 
 def solve_quadratic(a, b, c):
-    if a == 0:
-        return "Error: Not a quadratic equation (a cannot be zero)"
+    try:
+        if a == 0:
+            # Handle linear case
+            if b == 0:
+                return "Error: No solution"  # Both a and b are zero
+            else:
+                solution = -c / b
+                return f"Linear equation, solution: {solution}"
+        
+        # Calculate discriminant for quadratic case
+        discriminant = b**2 - 4*a*c
+        
+        if discriminant < 0:
+            return "Error: No real solutions"
+        else:
+            root1 = (-b + math.sqrt(discriminant)) / (2*a)
+            root2 = (-b - math.sqrt(discriminant)) / (2*a)
+            return f"Solutions: {root1}, {root2}"
     
-    discriminant = b**2 - 4*a*c
+    except ZeroDivisionError:
+        return "Error: Division by zero occurred"
+    except Exception as e:
+        return f"An unexpected error occurred: {e}"
     
-    if discriminant < 0:
-        return "Error: No real solutions"
-    else:
-        root1 = (-b + math.sqrt(discriminant)) / (2*a)
-        root2 = (-b - math.sqrt(discriminant)) / (2*a)
-        return f"Solutions: {root1}, {root2}"
+    finally:
+        print("Attempted to solve the equation.")
 
+# Input from the user
 try:
-    # Input from the user
-    a = int(input("Enter coefficient a: "))
-    b = int(input("Enter coefficient b: "))
-    c = int(input("Enter coefficient c: "))
+    a = int(input())
+    b = int(input())
+    c = int(input())
     
-    # Solve the quadratic equation
+    # Call the function and print the result
     result = solve_quadratic(a, b, c)
+    print(result)
 
 except ValueError:
-    # Handle invalid input that cannot be converted to an integer
-    print("Error: Please enter valid integers for coefficients a, b, and c.")
-
-finally:
-    # This block runs regardless of whether an exception occurred or not
-    print(result if 'result' in locals() else "No result to display.")
-    print("Attempted to solve the equation.")
+    print("Error: Please enter valid integers for coefficients.")
