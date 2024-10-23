@@ -29,14 +29,10 @@ def solve_quadratic(a, b, c):
         print("Attempted to solve the equation.")
 
 # Input from the user
-try:
-    a = int(input())
-    b = int(input())
-    c = int(input())
+a = int(input())
+b = int(input())
+c = int(input())
     
-    # Call the function and print the result
-    result = solve_quadratic(a, b, c)
-    print(result)
-
-except ValueError:
-    print("Error: Please enter valid integers for coefficients.")
+# Call the function and print the result
+result = solve_quadratic(a, b, c)
+print(result)
