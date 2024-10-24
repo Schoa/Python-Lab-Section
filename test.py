@@ -1,22 +1,22 @@
-def calculate_area(length, width):
-    # Assert that length is a positive integer
-    assert length > 0, "Length must be positive."
+def find_median(numbers):
+    # Sort the list first
+    numbers.sort()
+    n = len(numbers)
     
-    # Assert that width is a positive integer
-    assert width > 0, "Width must be positive."
+    # Calculate the median
+    if n % 2 == 1:
+        # If odd, return the middle element
+        median = numbers[n // 2]
+    else:
+        # If even, return the average of the two middle elements
+        median = (numbers[n // 2 - 1] + numbers[n // 2]) / 2
     
-    # Calculate and return the area of the rectangle
-    area = length * width
-    return area
+    return median
 
-# Example usage:
-try:
-    print(calculate_area(5, 10))  # Output: 50
-    print(calculate_area(-5, 10)) # This will raise an assertion error
-except AssertionError as e:
-    print(e)
+# Read input
+n = int(input())
+numbers = list(map(int, input().split()))
 
-try:
-    print(calculate_area(5, 0))   # This will also raise an assertion error
-except AssertionError as e:
-    print(e)
+# Call the function and print the result formatted to one decimal place
+median_value = find_median(numbers)
+print(f"{median_value:.1f}")
