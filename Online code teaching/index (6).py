@@ -4,5 +4,6 @@ def fav(film, food):
 
 print("The first person:")
 fav("Tinkerbell", "pizza")
+
 print("The second person:")
 fav("chicken", "Cinderella")
