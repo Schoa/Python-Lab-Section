@@ -18,7 +18,7 @@ def count_valleys(steps):
         if level == 0 and in_valley:
             valleys += 1
             in_valley = False
-
+ 
     return valleys
 
 # Input from the user
