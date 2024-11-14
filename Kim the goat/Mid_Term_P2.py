@@ -27,4 +27,4 @@ def find_divisors(n):
 print(find_divisors(n))
 
 def power_divisors(n):
-    
+    print()
