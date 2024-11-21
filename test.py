@@ -1,22 +1,42 @@
-def find_median(numbers):
-    # Sort the list first
-    numbers.sort()
-    n = len(numbers)
-    
-    # Calculate the median
-    if n % 2 == 1:
-        # If odd, return the middle element
-        median = numbers[n // 2]
+Kok_Seng = input()
+Wong = Kok_Seng.split("-")
+
+def ah(Wong):
+    """
+    Year - Month - Day
+
+    Year: 0
+    Month: 1
+    Day: 2
+    """
+    if int(Wong[1]) <= 12:
+        month = True
     else:
-        # If even, return the average of the two middle elements
-        median = (numbers[n // 2 - 1] + numbers[n // 2]) / 2
-    
-    return median
+        month = False
 
-# Read input
-n = int(input())
-numbers = list(map(int, input().split()))
+    if int(Wong[2]) <= 31: # day <= 31
+        if int(Wong[1]) == ["1", "3", "5", "7", "8", "10", "12"]: # Month with 31 days
+            if int(Wong[2]) <= 31:
+                day = True
+            else:
+                day = False
+        else:
+            if int(Wong[1]) != 2: # Month with 30 days
+                if int(Wong[2]) <= 30:
+                    day = True
+                else:
+                    day = False
+            else:
+                if int(Wong[2]) <= 28: # Feburary
+                    day = True
+                else:
+                    day = False
+    else:
+        day = False
 
-# Call the function and print the result formatted to one decimal place
-median_value = find_median(numbers)
-print(f"{median_value:.1f}")
+    if month == True and day == True:
+        print("True")
+    else:
+        print("False")
+
+ah(Wong)
