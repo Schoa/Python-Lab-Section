@@ -1,42 +1,32 @@
-Kok_Seng = input()
-Wong = Kok_Seng.split("-")
+def counting_sort(numbers):
+    """Sorts an array using the Counting Sort algorithm."""
+    # Step 1: Find maximum value
+    max_val = max(numbers)
 
-def ah(Wong):
-    """
-    Year - Month - Day
+    # Step 2: Initialize count array
+    count = [0] * (max_val + 1)
 
-    Year: 0
-    Month: 1
-    Day: 2
-    """
-    if int(Wong[1]) <= 12:
-        month = True
-    else:
-        month = False
+    # Step 3: Count occurrences of each value
+    for num in numbers:
+        count[num] += 1
 
-    if int(Wong[2]) <= 31: # day <= 31
-        if int(Wong[1]) == ["1", "3", "5", "7", "8", "10", "12"]: # Month with 31 days
-            if int(Wong[2]) <= 31:
-                day = True
-            else:
-                day = False
-        else:
-            if int(Wong[1]) != 2: # Month with 30 days
-                if int(Wong[2]) <= 30:
-                    day = True
-                else:
-                    day = False
-            else:
-                if int(Wong[2]) <= 28: # Feburary
-                    day = True
-                else:
-                    day = False
-    else:
-        day = False
+    # Step 4: Modify count array to store cumulative counts
+    for i in range(1, len(count)):
+        count[i] += count[i - 1]
 
-    if month == True and day == True:
-        print("True")
-    else:
-        print("False")
+    # Step 5: Build output array
+    output = [0] * len(numbers)
+    for num in reversed(numbers):  # To maintain stability
+        output[count[num] - 1] = num
+        count[num] -= 1
 
-ah(Wong)
+    # Step 6: Copy sorted elements back to original array (if needed)
+    for i in range(len(numbers)):
+        numbers[i] = output[i]
+
+# Example usage
+if __name__ == "__main__":
+    unsorted_numbers = [4, 2, -3, 8, 3, -7, 1]
+    print("Original array:", unsorted_numbers)
+    counting_sort(unsorted_numbers)
+    print("Sorted array:", unsorted_numbers)

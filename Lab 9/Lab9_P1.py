@@ -2,23 +2,19 @@
 numbers = list(map(int, input().split()))
 
 def find_min_max(numbers):
-    """
-    Bubble Sort Algorithm Implementation:
-        Range of the array is from 0 to n-i-1
-        Swap the elements if the element found is greater than the adjacent element
-    """
-
-    n = len(numbers)
-
-    # For loop to traverse through all 
-    # element in an array
-    for i in range(n):
-        for j in range(0, n - i - 1):            
-            if numbers[j] > numbers[j + 1]:
-                numbers[j], numbers[j + 1] = numbers[j + 1], numbers[j]
-
+    # Find minimum
     minVal = numbers[0]
-    maxVal = numbers[-1]
+
+    for n in numbers:
+        if n < minVal:
+            minVal = n
+
+    # Find maximum
+    maxVal = numbers[0]
+
+    for i in numbers:
+        if i > maxVal:
+            maxVal = i
 
     return minVal, maxVal
 
@@ -33,25 +29,31 @@ def count_frequency(numbers):
     return freqList
 
 def counting_sort(numbers):
-    """
-    Bubble Sort Algorithm Implementation:
-        Range of the array is from 0 to n-i-1
-        Swap the elements if the element found is greater than the adjacent element
-    """
+    # Finding the maximum element of input_array.
+    M = b
 
-    n = len(numbers)
+    # Initializing count_array with 0
+    count_array = [0] * (M + 1)
 
-    # For loop to traverse through all 
-    # element in an array
-    for i in range(n):
-        for j in range(0, n - i - 1):            
-            if numbers[j] > numbers[j + 1]:
-                numbers[j], numbers[j + 1] = numbers[j + 1], numbers[j]
+    # Mapping each element of input_array as an index of count_array
+    for num in numbers:
+        count_array[num] += 1
 
-    print(numbers)
+    # Calculating prefix sum at every index of count_array
+    for i in range(1, M + 1):
+        count_array[i] += count_array[i - 1]
+
+    # Creating output_array from count_array
+    output_array = [0] * len(numbers)
+
+    for i in range(len(numbers) - 1, -1, -1):
+        output_array[count_array[numbers[i]] - 1] = numbers[i]
+        count_array[numbers[i]] -= 1
+
+    return output_array
 
 # Out put
 a, b = find_min_max(numbers)
 print(a, b)
 print(count_frequency(numbers))
-counting_sort(numbers)
+print(counting_sort(numbers))
