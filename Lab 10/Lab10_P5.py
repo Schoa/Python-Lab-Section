@@ -1,5 +1,7 @@
 def permute(nums):
-    """Generate all permutations of the given list of numbers."""
+    """
+    Generate all permutations of the given list of numbers.
+    """
     def backtrack(start=0):
         # Base case: if we've reached the end of the array
         if start == len(nums):
@@ -20,7 +22,15 @@ def permute(nums):
 # Input
 nums = list(map(int, input().split()))
 
-# Output
+# Sort the numbers to ensure permutations are generated in sorted order
+nums.sort()
+
+# Generate permutations
 permutations = permute(nums)
+
+# Sort permutations to ensure they are printed in lexicographical order
+permutations.sort()
+
+# Print each permutation in the required format
 for perm in permutations:
-        print(" ".join(map(str, perm)))
+    print(" ".join(map(str, perm)))
