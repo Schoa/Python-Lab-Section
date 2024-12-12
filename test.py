@@ -1,34 +1,89 @@
-from vex import (
-    Brain, Motor, Ports, Colorsensor, Sonar, Bumper, ColorHue, BrakeType,
-    DEGREES, FORWARD, PERCENT, SECONDS, REVERSE, MM, BrainLcd
-)
-import sys
-import vex
+class Account:
+    def __init__(self, account_id, initial_balance=0):
+        self._account_id = account_id  # Public attribute for account ID
+        self.__balance = initial_balance  # Private attribute for balance
 
-# INITIALIZATION OF ROBOT PARTS
-# ==========================
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+            return f"Deposit successful to account {self._account_id}. Updated balance: {self.__balance:.0f}"
+        else:
+            return "Invalid deposit amount."
 
-# brain initialization
-brain = Brain()
+    def withdraw(self, amount):
+        if amount <= 0:
+            return "Invalid withdrawal amount."
+        if amount > self.__balance:
+            return "Insufficient balance."
+        self.__balance -= amount
+        return f"Withdrawal successful from account {self._account_id}. Updated balance: {self.__balance:.0f}"
 
-# motors initialization
-right_motor = Motor(Ports.PORT12)
-left_motor = Motor(Ports.PORT1)
-arm_motor = Motor(Ports.PORT10)
-claw_motor = Motor(Ports.PORT4)
+    def get_balance(self):
+        return self.__balance
 
-# sensors initialization
-sonar_sensor = Sonar(Ports.PORT8)
-color_sensor = Colorsensor(Ports.PORT6, False)
-lcd = BrainLcd()
+    def set_balance(self, new_balance):
+        if new_balance >= 0:
+            self.__balance = new_balance
 
-# Task 1 - for 1st and 2nd member
-def rectangle():
-    while True:
-        left_motor.spin(REVERSE, 60, PERCENT)
-        right_motor.spin(FORWARD, 60, PERCENT)
-        vex.wait(2)
 
-        left_motor.spin(REVERSE, 40, PERCENT)
-        right_motor.spin(FORWARD, 0, PERCENT)
-        vex.wait(2)
+class CheckingAccount(Account):
+    def __init__(self, account_id, initial_balance=0):
+        super().__init__(account_id, initial_balance)
+        self.__fee = 5  # Default fee for withdrawals
+
+    def withdraw(self, amount):
+        if amount <= 0:
+            return "Invalid withdrawal amount."
+        total_withdrawal = amount + self.__fee
+        if total_withdrawal > self.get_balance():
+            return "Insufficient balance."
+        
+        # Deduct the total withdrawal (amount + fee)
+        self.set_balance(self.get_balance() - total_withdrawal)
+        return (f"Withdrawal successful from account {self._account_id} "
+                f"(including fee of {self.__fee}). Updated balance: {self.get_balance():.0f}")
+
+    def deposit(self, amount):
+        if amount > 0:
+            super().deposit(amount)
+            return f"Deposit successful to account {self._account_id}. Updated balance: {self.get_balance():.0f}"
+        else:
+            return "Invalid deposit amount."
+
+
+def main():
+    accounts = {}
+    n = int(input())  # Read number of commands
+
+    for _ in range(n):
+        command = input().strip().split()
+        
+        account_id = command[0]
+        
+        if len(command) == 3 and command[1] == 'deposit':
+            # Deposit money into the existing account
+            amount = float(command[2])
+            if account_id in accounts:
+                print(accounts[account_id].deposit(amount))
+            else:
+                print("Account does not exist.")
+        
+        elif len(command) == 2:
+        # Create an account
+            if account_id not in accounts:
+                a = command[1]
+                accounts[account_id] = CheckingAccount(account_id, a)
+                print(f"Account {account_id} created with balance: {command[1]}")
+            else:
+                print("Account already exists.")
+        
+        elif len(command) == 3 and command[1] == 'withdraw':
+            # Withdraw money from the existing account
+            amount = float(command[2])
+            if account_id in accounts:
+                print(accounts[account_id].withdraw(amount))
+            else:
+                print("Account does not exist.")
+    
+if __name__ == "__main__":
+    main()
