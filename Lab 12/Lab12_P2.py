@@ -77,5 +77,5 @@ sum_poly = poly1 + poly2
 product_poly = poly1 * poly2
 
 # Output results
-print("Sum:", sum_poly)
-print("Product:", product_poly)
+print(sum_poly)
+print(product_poly)
